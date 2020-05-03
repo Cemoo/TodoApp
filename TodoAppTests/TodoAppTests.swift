@@ -10,25 +10,51 @@ import XCTest
 @testable import TodoApp
 
 class TodoAppTests: XCTestCase {
+    
+    private var view: MockView!
+    private var viewModel: TodosViewModel!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        viewModel = TodosViewModel()
+        view = MockView()
+        viewModel.delegate = view
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    /**
+        -   Tests routes for opening detail vc or not for adding new todo.
+     */
+    func testNavigateAddTodo() {
+        viewModel.addNewItem()
+        
+        XCTAssert(view.routes.count == 1)
+        XCTAssert(view.routes.contains(.addnew))
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    /**
+       -   Tests routes for editing to detail vc or not for edting todo item.
+    */
+    func testEditTodo() {
+        viewModel.editItem(with: TodoItem())
+        
+        XCTAssert(view.routes.contains(.detail))
     }
+}
 
+
+class MockView: TodosViewModelDelegate {
+
+    var routes: [TodoRoutes] = []
+    var outputs: [TodosOutput] = []
+    
+    func handle(_ output: TodosOutput) {
+        outputs.append(output)
+    }
+    
+    func navigate(_ route: TodoRoutes) {
+        routes.append(route)
+    }
 }
