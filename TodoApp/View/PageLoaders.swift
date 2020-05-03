@@ -7,18 +7,21 @@
 //
 
 import UIKit
+import CoreData
 
 struct MainPageBuilder {
-    static func make(_ viewModel: TodosViewModelProtocol) -> MainVC {
+    static func make() -> MainVC {
         let destinationVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as! MainVC
-        destinationVC.viewModel = viewModel
+        destinationVC.viewModel = TodosViewModel()
         return destinationVC
     }
 }
 
 struct DetailPageBuilder {
-    static func make(_ item: TodoItem? = nil) -> DetailVC {
+    static func make(_ item: NSManagedObject? = nil) -> DetailVC {
         let destinationVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailVC") as! DetailVC
+        destinationVC.viewModel = DetailViewModel()
+        destinationVC.viewModel.itemForUpdate = item
         return destinationVC
     }
 }

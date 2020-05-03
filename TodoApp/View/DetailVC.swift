@@ -9,10 +9,48 @@
 import UIKit
 
 class DetailVC: UIViewController {
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var saveButton: UIButton!
+    
+    var viewModel: DetailViewModelProtocol! {
+        didSet {
+            viewModel.delegate = self
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewModel.setInitials()
     }
+    
+    @IBAction func saveAction(_ sender: Any) {
+        let item = Todo(name: nameTextField.text ?? "", id: UUID().uuidString, state: false)
+        viewModel.save(item)
+    }
+    
+}
 
+extension DetailVC: DetailViewModelDelegate {
+    func handle(_ output: DetailOutput) {
+        switch output {
+        case .showError(let text):
+            let alert = UIAlertController(title: "", message: text, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+        case .updateButtonTitle(let text):
+            self.saveButton.setTitle(text, for: .normal)
+        case .fillName(let text):
+            self.nameTextField.text = text
+        case .setPageTitle(let text):
+            self.title = text
+        }
+    }
+    
+    func navigate(_ route: DetailRoutes) {
+        switch route {
+        case .backtomain:
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
 }

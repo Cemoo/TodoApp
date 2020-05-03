@@ -89,6 +89,9 @@
                                 <state key="normal" title="SAVE">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveAction:" destination="wYB-V6-Bta" eventType="touchUpInside" id="MLd-TD-BxK"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -103,6 +106,10 @@
                         <viewLayoutGuide key="safeArea" id="NlE-o1-MhQ"/>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="pSv-KY-Gyt"/>
+                    <connections>
+                        <outlet property="nameTextField" destination="Wdc-Ff-A77" id="Uns-HC-tEv"/>
+                        <outlet property="saveButton" destination="6BQ-BH-epg" id="Csf-Gm-uIv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f9Y-tR-g8z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

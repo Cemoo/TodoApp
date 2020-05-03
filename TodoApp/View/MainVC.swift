@@ -7,13 +7,18 @@
 //
 
 import UIKit
+import CoreData
 
 class MainVC: UIViewController {
 
     @IBOutlet weak var loadingView: UIActivityIndicatorView!
     @IBOutlet weak var todoTableView: UITableView!
     
-    private var todos: [TodoItem] = []
+    private var todos: [NSManagedObject] = [] {
+        didSet {
+            self.todoTableView.reloadData()
+        }
+    }
     
     var viewModel: TodosViewModelProtocol! {
         didSet {
@@ -21,9 +26,13 @@ class MainVC: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel = TodosViewModel() //This can move in a AppRouter class
+        viewModel.getItems()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = TodosViewModel() //This can move in a AppRouter class
         setUI()
     }
     
@@ -40,8 +49,8 @@ class MainVC: UIViewController {
 extension MainVC: TodosViewModelDelegate {
     func handle(_ output: TodosOutput) {
         switch output {
-        case .showData:
-            break
+        case .showData(let items):
+            self.todos = items
         default:
             break
         }
@@ -51,9 +60,11 @@ extension MainVC: TodosViewModelDelegate {
         switch route {
         case .addnew:
             let destVC = DetailPageBuilder.make()
+            destVC.viewModel.type = .save
             self.navigationController?.pushViewController(destVC, animated: true)
         case .detail(let item):
             let destVC = DetailPageBuilder.make(item)
+            destVC.viewModel.type = .update
             self.navigationController?.pushViewController(destVC, animated: true)
         }
     }
@@ -61,21 +72,36 @@ extension MainVC: TodosViewModelDelegate {
 
 extension MainVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return todos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = todoTableView.dequeueReusableCell(withIdentifier: "todoitemcell", for: indexPath)
-        cell.textLabel?.text = "Test"
+        let todoItem = self.todos[indexPath.row]
+        if let name = todoItem.value(forKey: "name") as? String {
+            cell.textLabel?.text = name
+        }
         cell.selectionStyle = .none
         return cell
     }
     
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal, title: title,
+                                        handler: { (action, view, completionHandler) in
+             let id = self.todos[indexPath.row].value(forKey: "id") as! String
+             self.viewModel.delete(for: id)
+             completionHandler(true)
+        })
+
+        action.title = "Delete"
+        action.backgroundColor = .red
+        let configuration = UISwipeActionsConfiguration(actions: [action])
+        return configuration
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let _ = todoTableView.cellForRow(at: indexPath) else {
-            return
-        }
+        let item = self.todos[indexPath.row]
         
-        viewModel.editItem(with: TodoItem())
+        viewModel.editItem(with: item)
     }
 }

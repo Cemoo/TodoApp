@@ -1,15 +1,16 @@
 //
-//  TodoAppTests.swift
-//  TodoAppTests
+//  MainVCTests.swift
+//  MainVCTests
 //
 //  Created by Cemal BAYRI on 5/2/20.
 //  Copyright © 2020 Cemal BAYRI. All rights reserved.
 //
 
 import XCTest
+import CoreData
 @testable import TodoApp
 
-class TodoAppTests: XCTestCase {
+class MainVCTests: XCTestCase {
     
     private var view: MockView!
     private var viewModel: TodosViewModel!
@@ -18,10 +19,6 @@ class TodoAppTests: XCTestCase {
         viewModel = TodosViewModel()
         view = MockView()
         viewModel.delegate = view
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
     /**
@@ -34,13 +31,20 @@ class TodoAppTests: XCTestCase {
         XCTAssert(view.routes.contains(.addnew))
     }
     
+    
     /**
-       -   Tests routes for editing to detail vc or not for edting todo item.
-    */
-    func testEditTodo() {
-        viewModel.editItem(with: TodoItem())
+     -   Tests getting todos from core data
+     */
+    func testGetTodos() {
+        viewModel.getItems()
         
-        XCTAssert(view.routes.contains(.detail))
+        XCTAssert(view.items.count > 0)
+    }
+    
+    func testDeleteItem(_ id: String) {
+       // "223B1DB5-80EF-4E06-8A3C-81F18A38D4DD"
+        viewModel.delete(for: "223B1DB5-80EF-4E06-8A3C-81F18A38D4DD")
+        XCTAssert(view.items.count == 2)
     }
 }
 
@@ -50,8 +54,16 @@ class MockView: TodosViewModelDelegate {
     var routes: [TodoRoutes] = []
     var outputs: [TodosOutput] = []
     
+    var items: [NSManagedObject] = []
+    
     func handle(_ output: TodosOutput) {
         outputs.append(output)
+        switch output {
+        case .showData(let items):
+            self.items = items
+        default:
+            break
+        }
     }
     
     func navigate(_ route: TodoRoutes) {
