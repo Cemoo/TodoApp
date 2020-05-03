@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class DetailViewModel: DetailViewModelProtocol {
+final class DetailViewModel: DetailViewModelProtocol {
 
     weak var delegate: DetailViewModelDelegate?
     

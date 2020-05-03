@@ -22,6 +22,11 @@ class DetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.setInitials()
+        setUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        nameTextField.becomeFirstResponder()
     }
     
     @IBAction func saveAction(_ sender: Any) {
@@ -29,6 +34,13 @@ class DetailVC: UIViewController {
         viewModel.save(item)
     }
     
+    fileprivate func setUI() {
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
+    }
 }
 
 extension DetailVC: DetailViewModelDelegate {

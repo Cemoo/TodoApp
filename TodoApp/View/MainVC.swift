@@ -27,13 +27,13 @@ class MainVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewModel = TodosViewModel() //This can move in a AppRouter class
-        viewModel.getItems()
+       viewModel.getItems()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        
     }
     
     fileprivate func setUI() {

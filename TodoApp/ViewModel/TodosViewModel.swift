@@ -9,12 +9,12 @@
 import UIKit
 import CoreData
 
-class TodosViewModel: TodosViewModelProtocol {
+final class TodosViewModel: TodosViewModelProtocol {
    
     weak var delegate: TodosViewModelDelegate?
     
     var todos: [NSManagedObject] = []
-
+    
     func getItems() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return

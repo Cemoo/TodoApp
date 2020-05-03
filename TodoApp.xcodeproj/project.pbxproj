@@ -25,6 +25,8 @@
 		D0EDABF8245ED4900044ED05 /* TodoItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EDABF6245ED4900044ED05 /* TodoItem+CoreDataClass.swift */; };
 		D0EDABF9245ED4900044ED05 /* TodoItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EDABF7245ED4900044ED05 /* TodoItem+CoreDataProperties.swift */; };
 		D0EFEA80245EDEA900B3FAB5 /* DetailVCUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EFEA7F245EDEA900B3FAB5 /* DetailVCUnitTests.swift */; };
+		D0EFEA82245EF1B800B3FAB5 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EFEA81245EF1B800B3FAB5 /* AppContainer.swift */; };
+		D0EFEA86245EF20900B3FAB5 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EFEA85245EF20900B3FAB5 /* AppRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		D0EDABF6245ED4900044ED05 /* TodoItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D0EDABF7245ED4900044ED05 /* TodoItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D0EFEA7F245EDEA900B3FAB5 /* DetailVCUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVCUnitTests.swift; sourceTree = "<group>"; };
+		D0EFEA81245EF1B800B3FAB5 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		D0EFEA85245EF20900B3FAB5 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +164,8 @@
 			children = (
 				D01F2A4F245D98E200248269 /* AppDelegate.swift */,
 				D01F2A51245D98E200248269 /* SceneDelegate.swift */,
+				D0EFEA81245EF1B800B3FAB5 /* AppContainer.swift */,
+				D0EFEA85245EF20900B3FAB5 /* AppRouter.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -273,11 +279,13 @@
 				D00E8AA8245EC88000F03AB2 /* DetailViewModelContracts.swift in Sources */,
 				D00E8AA2245E9ACA00F03AB2 /* PageLoaders.swift in Sources */,
 				D0EDABF9245ED4900044ED05 /* TodoItem+CoreDataProperties.swift in Sources */,
+				D0EFEA86245EF20900B3FAB5 /* AppRouter.swift in Sources */,
 				D00E8AA6245EC86C00F03AB2 /* DetailViewModel.swift in Sources */,
 				D01F2A50245D98E200248269 /* AppDelegate.swift in Sources */,
 				D01F2A52245D98E200248269 /* SceneDelegate.swift in Sources */,
 				D01F2A5A245D98E200248269 /* TodoApp.xcdatamodeld in Sources */,
 				D00E8AA0245E9A8000F03AB2 /* DetailVC.swift in Sources */,
+				D0EFEA82245EF1B800B3FAB5 /* AppContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

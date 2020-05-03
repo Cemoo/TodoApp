@@ -21,25 +21,22 @@ class DetailVCUnitTests: XCTestCase {
         viewModel.delegate = view
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
     func testSave(_ item: Todo) {
         viewModel.save(Todo(name: "Test", id: UUID().uuidString, state: false))
         XCTAssert(view.routes.contains(.backtomain))
     }
-
+    
 }
 
 class MockDetailView: DetailViewModelDelegate {
-    
+ 
     var routes: [DetailRoutes] = []
+    var outputs: [DetailOutput] = []
     
     func handle(_ output: DetailOutput) {
-        
+        outputs.append(output)
     }
-    
+     
     func navigate(_ route: DetailRoutes) {
         routes.append(route)
     }
